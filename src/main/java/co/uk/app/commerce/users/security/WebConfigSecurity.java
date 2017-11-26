@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import co.uk.app.commerce.users.config.SecurityConfiguration;
+import co.uk.app.commerce.users.security.filter.JWTAuthenticationFilter;
+import co.uk.app.commerce.users.security.filter.JWTAuthorizationFilter;
 
 @EnableWebSecurity
 public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
@@ -43,13 +45,4 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
 	}
-
-	// @Bean
-	// CorsConfigurationSource corsConfigurationSource() {
-	// final UrlBasedCorsConfigurationSource source = new
-	// UrlBasedCorsConfigurationSource();
-	// source.registerCorsConfiguration("/**", new
-	// CorsConfiguration().applyPermitDefaultValues());
-	// return source;
-	// }
 }

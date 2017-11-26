@@ -1,4 +1,4 @@
-package co.uk.app.commerce.users.security;
+package co.uk.app.commerce.users.security.filter;
 
 import java.io.IOException;
 import java.security.Key;
@@ -8,6 +8,7 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
@@ -75,6 +76,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		String token = Jwts.builder().setSubject(((User) auth.getPrincipal()).getUsername())
 				.setExpiration(tokenService.generateExpirationDate()).signWith(signatureAlgorithm, signingKey)
 				.compact();
+		res.addCookie(new Cookie("token", token));
 		res.addHeader(securityConfiguration.getJwtHeader(), securityConfiguration.getJwtTokenPrefix() + token);
 	}
 }

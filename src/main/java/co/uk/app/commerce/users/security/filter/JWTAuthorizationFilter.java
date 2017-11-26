@@ -1,4 +1,4 @@
-package co.uk.app.commerce.users.security;
+package co.uk.app.commerce.users.security.filter;
 
 import java.io.IOException;
 import java.util.ArrayList;
