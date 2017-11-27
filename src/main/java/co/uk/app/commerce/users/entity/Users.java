@@ -2,6 +2,7 @@ package co.uk.app.commerce.users.entity;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,12 +13,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Users implements Serializable {
+public class Users implements Serializable, UserDetails {
 
 	private static final long serialVersionUID = -2622632750135832315L;
 
@@ -64,6 +69,21 @@ public class Users implements Serializable {
 
 	@JsonIgnore
 	private String field3;
+
+	@Transient
+	private Set<GrantedAuthority> authorities;
+
+	@Transient
+	private boolean accountNonExpired = true;
+
+	@Transient
+	private boolean accountNonLocked = true;
+
+	@Transient
+	private boolean credentialsNonExpired = true;
+
+	@Transient
+	private boolean enabled = true;
 
 	public Set<Address> getAddress() {
 		return address;
@@ -175,5 +195,30 @@ public class Users implements Serializable {
 
 	public void setField3(String field3) {
 		this.field3 = field3;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return authorities;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return accountNonExpired;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return accountNonLocked;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return credentialsNonExpired;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return enabled;
 	}
 }

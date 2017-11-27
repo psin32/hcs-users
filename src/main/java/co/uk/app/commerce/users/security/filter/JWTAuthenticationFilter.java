@@ -3,6 +3,7 @@ package co.uk.app.commerce.users.security.filter;
 import java.io.IOException;
 import java.security.Key;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.FilterChain;
@@ -17,7 +18,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -25,6 +25,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import co.uk.app.commerce.users.config.SecurityConfiguration;
+import co.uk.app.commerce.users.entity.Address;
 import co.uk.app.commerce.users.entity.Users;
 import co.uk.app.commerce.users.security.service.TokenService;
 import co.uk.app.commerce.users.security.service.TokenServiceImpl;
@@ -36,7 +37,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS512;
 
 	private SecurityConfiguration securityConfiguration;
-	
+
 	private TokenService tokenService;
 
 	private AuthenticationManager authenticationManager;
@@ -73,10 +74,22 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(securityConfiguration.getJwtSecret());
 		Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
-		String token = Jwts.builder().setSubject(((User) auth.getPrincipal()).getUsername())
+		Users users = (Users) auth.getPrincipal();
+		String token = Jwts.builder().setSubject(users.getUsername())
 				.setExpiration(tokenService.generateExpirationDate()).signWith(signatureAlgorithm, signingKey)
 				.compact();
-		res.addCookie(new Cookie("token", token));
+		res.addCookie(new Cookie("TOKEN", token));
+
+		Iterator<Address> adresseses = users.getAddress().iterator();
+		Address address = null;
+		while (adresseses.hasNext()) {
+			address = adresseses.next();
+		}
+		if (null != address) {
+			res.addCookie(new Cookie("USERNAME", address.getFirstname()));
+			res.addCookie(new Cookie("USER_ID", users.getUserId().toString()));
+		}
+
 		res.addHeader(securityConfiguration.getJwtHeader(), securityConfiguration.getJwtTokenPrefix() + token);
 	}
 }

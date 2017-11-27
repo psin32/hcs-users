@@ -7,4 +7,6 @@ import co.uk.app.commerce.users.entity.Users;
 public interface UsersRepository extends JpaRepository<Users, Long> {
 
 	Users findByUsername(String username);
+	
+	Users findByUserId(Long userId);
 }

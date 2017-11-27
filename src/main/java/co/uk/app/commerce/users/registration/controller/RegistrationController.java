@@ -46,7 +46,9 @@ public class RegistrationController {
 		if (registrationService.isValidUser(registration)) {
 			RegistrationBean registeredUser = registrationService.persist(registration);
 			String token = tokenService.generateToken(registeredUser.getUsers().getUsername());
-			response.addCookie(new Cookie("token", token));
+			response.addCookie(new Cookie("TOKEN", token));
+			response.addCookie(new Cookie("USERNAME", registeredUser.getAddress().getFirstname()));
+			response.addCookie(new Cookie("USER_ID", registeredUser.getUsers().getUserId().toString()));
 			response.addHeader(securityConfiguration.getJwtHeader(), securityConfiguration.getJwtTokenPrefix() + token);
 			return ResponseEntity.ok(registeredUser);
 		}
