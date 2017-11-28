@@ -30,8 +30,14 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public Set<Address> getActiveSelfAddressByUserId(Long userId) {
-		return addressRepository.findByUsersUserIdAndSelfaddressAndStatus(userId, 1, "P");
+	public Address getActiveSelfAddressByUserId(Long userId) {
+		Set<Address> addressSet = addressRepository.findByUsersUserIdAndSelfaddressAndStatus(userId, 1, "P");
+		Address address = null;
+		while (addressSet.iterator().hasNext()) {
+			address = addressSet.iterator().next();
+			break;
+		}
+		return address;
 	}
 
 	@Override
@@ -42,10 +48,8 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	public Address save(AddressBean addressBean) {
 		Long usersId = addressBean.getUsersId();
-		System.out.println("USERS ID ====== "+usersId);
 		Address address = addressBean.getAddress();
 		address.setUsers(usersRepository.findByUserId(usersId));
 		return addressRepository.save(address);
 	}
-
 }

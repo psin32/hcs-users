@@ -28,8 +28,21 @@ public class AddressController {
 	}
 
 	@PostMapping("address/add")
-	public ResponseEntity<?> addAddress(@RequestBody AddressBean addressBean, HttpServletRequest request, HttpServletResponse response) {
+	public ResponseEntity<?> addAddress(@RequestBody AddressBean addressBean, HttpServletRequest request,
+			HttpServletResponse response) {
 		Address savedAddress = addressService.save(addressBean);
 		return ResponseEntity.ok(savedAddress);
+	}
+
+	@PostMapping("address/update")
+	public ResponseEntity<?> updateAddress(@RequestBody AddressBean addressBean, HttpServletRequest request,
+			HttpServletResponse response) {
+		Address savedAddress = addressService.save(addressBean);
+		return ResponseEntity.ok(savedAddress);
+	}
+
+	@GetMapping("address/selfaddress/{id}")
+	public @ResponseBody Address getSelfAddress(@PathVariable("id") Long userId) {
+		return addressService.getActiveSelfAddressByUserId(userId);
 	}
 }

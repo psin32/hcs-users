@@ -9,7 +9,7 @@ public interface AddressService {
 
 	Address getActiveAddressByAddressId(Long addressId);
 
-	Set<Address> getActiveSelfAddressByUserId(Long userId);
+	Address getActiveSelfAddressByUserId(Long userId);
 
 	Set<Address> getActiveAddressesByUserId(Long userId);
 
