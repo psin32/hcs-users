@@ -9,13 +9,21 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
+import com.github.springtestdbunit.DbUnitTestExecutionListener;
+import com.github.springtestdbunit.annotation.DatabaseOperation;
+import com.github.springtestdbunit.annotation.DatabaseSetup;
+import com.github.springtestdbunit.annotation.DatabaseTearDown;
+
 import co.uk.app.commerce.users.application.UsersApplication;
 
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class,
-		TransactionalTestExecutionListener.class })
+		TransactionalTestExecutionListener.class, DbUnitTestExecutionListener.class })
 @RunWith(SpringJUnit4ClassRunner.class)
+@DatabaseSetup(AbstractUnitTest.DATASET)
 @SpringBootTest(classes = { UsersApplication.class })
+@DatabaseTearDown(type = DatabaseOperation.DELETE_ALL, value = { AbstractUnitTest.DATASET })
 @TestPropertySource(locations = "classpath:application-test.properties")
 public abstract class AbstractUnitTest {
 
+	protected static final String DATASET = "classpath:dataset.xml";
 }

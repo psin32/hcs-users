@@ -1,5 +1,7 @@
 package co.uk.app.commerce.unittest.users.registration.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -9,13 +11,11 @@ import co.uk.app.commerce.users.entity.Address;
 import co.uk.app.commerce.users.entity.Users;
 import co.uk.app.commerce.users.registration.service.RegistrationService;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 public class RegistrationServiceUnitTest extends AbstractUnitTest {
 
 	@Autowired
 	private RegistrationService registrationService;
-
+	
 	@Test
 	public void testPersistUsers() throws Exception {
 		Users users = new Users();
@@ -40,7 +40,7 @@ public class RegistrationServiceUnitTest extends AbstractUnitTest {
 		registration.setAddress(address);
 
 		RegistrationBean savedUser = registrationService.persist(registration);
-
+		
 		assertThat(savedUser.getUsers().getUserId()).isNotNull();
 	}
 }

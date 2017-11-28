@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<USERS users_id="100" username="a1@testing.com" registertype="R"
+		password="abcd1234" lastpasswordresetdate="2017-11-26 22:41:23.0"
+		lastsession="2017-11-26 22:41:23.0" registration="2017-11-26 22:41:23.0"
+		registrationupdate="2017-11-26 22:41:23.0" />
+
+	<ADDRESS address_id="100" users_id="100" addresstype="S" email1="a1@testing.com"
+		isprimary="0" lastcreate="2017-11-26 22:41:23.0"
+		nickname="test" selfaddress="1" status="P"/>
+</dataset>
