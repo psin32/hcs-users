@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,6 @@ import co.uk.app.commerce.users.registration.service.RegistrationService;
 import co.uk.app.commerce.users.security.service.TokenService;
 
 @RestController
-@RequestMapping("/api/users")
 public class RegistrationController {
 
 	@Autowired
@@ -34,7 +34,7 @@ public class RegistrationController {
 	@Autowired
 	private SecurityConfiguration securityConfiguration;
 
-	@PutMapping
+	@PostMapping(path = "/register")
 	public ResponseEntity<?> persistPerson(@RequestBody RegistrationBean registration, HttpServletResponse response) {
 		if (registrationService.isValidUser(registration)) {
 			RegistrationBean registeredUser = registrationService.persist(registration);
