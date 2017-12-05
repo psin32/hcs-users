@@ -75,14 +75,15 @@ public class TokenServiceImpl implements TokenService {
 		return refreshedToken;
 	}
 
-	public String generateToken(String username) {
+	public String generateToken(Users users) {
 		byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(securityConfiguration.getJwtSecret());
 		Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
 		String audience = securityConfiguration.getJwtAudience();
-		return Jwts.builder().setId(username).setIssuer("commerce").setSubject(username).setAudience(audience)
-				.setIssuedAt(new Date()).setExpiration(generateExpirationDate())
-				.signWith(signatureAlgorithm, signingKey).compact();
+		return Jwts.builder().setId(String.valueOf(users.getUserId())).setIssuer("commerce")
+				.setSubject(users.getUsername()).setAudience(audience).setIssuedAt(new Date())
+				.setExpiration(generateExpirationDate()).claim("userId", users.getUserId())
+				.claim("registertype", users.getRegistertype()).signWith(signatureAlgorithm, signingKey).compact();
 	}
 
 	public Claims getAllClaimsFromToken(String token) {

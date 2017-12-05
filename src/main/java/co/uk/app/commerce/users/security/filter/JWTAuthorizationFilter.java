@@ -71,6 +71,8 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 				String user = claims.getSubject();
 
 				if (user != null) {
+					request.setAttribute("USER_ID", claims.get("userId"));
+					request.setAttribute("REGISTER_TYPE", claims.get("registertype"));
 					return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
 				}
 			}

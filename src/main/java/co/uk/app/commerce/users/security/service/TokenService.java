@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
+import co.uk.app.commerce.users.entity.Users;
 import io.jsonwebtoken.Claims;
 
 public interface TokenService {
@@ -18,7 +19,7 @@ public interface TokenService {
 
 	public String refreshToken(String token);
 
-	public String generateToken(String username);
+	public String generateToken(Users users);
 
 	public Claims getAllClaimsFromToken(String token);
 

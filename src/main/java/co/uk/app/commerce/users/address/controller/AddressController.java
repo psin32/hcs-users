@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,14 +24,17 @@ public class AddressController {
 	@Autowired
 	private AddressService addressService;
 
-	@GetMapping("/{id}")
-	public @ResponseBody Iterable<Address> getAddressByUserId(@PathVariable("id") Long userId) {
-		return addressService.getActiveAddressesByUserId(userId);
+	@GetMapping
+	public @ResponseBody Iterable<Address> getAddressByUserId(HttpServletRequest request) {
+		String userId = String.valueOf(request.getAttribute("USER_ID"));
+		return addressService.getActiveAddressesByUserId(Long.valueOf(userId));
 	}
 
 	@PutMapping
 	public ResponseEntity<?> addAddress(@RequestBody AddressBean addressBean, HttpServletRequest request,
 			HttpServletResponse response) {
+		String userId = String.valueOf(request.getAttribute("USER_ID"));
+		addressBean.setUsersId(Long.valueOf(userId));
 		Address savedAddress = addressService.save(addressBean);
 		return ResponseEntity.ok(savedAddress);
 	}
@@ -40,12 +42,15 @@ public class AddressController {
 	@PatchMapping
 	public ResponseEntity<?> updateAddress(@RequestBody AddressBean addressBean, HttpServletRequest request,
 			HttpServletResponse response) {
+		String userId = String.valueOf(request.getAttribute("USER_ID"));
+		addressBean.setUsersId(Long.valueOf(userId));
 		Address savedAddress = addressService.save(addressBean);
 		return ResponseEntity.ok(savedAddress);
 	}
 
-	@GetMapping("/selfaddress/{id}")
-	public @ResponseBody Address getSelfAddress(@PathVariable("id") Long userId) {
-		return addressService.getActiveSelfAddressByUserId(userId);
+	@GetMapping("/selfaddress")
+	public @ResponseBody Address getSelfAddress(HttpServletRequest request) {
+		String userId = String.valueOf(request.getAttribute("USER_ID"));
+		return addressService.getActiveSelfAddressByUserId(Long.valueOf(userId));
 	}
 }

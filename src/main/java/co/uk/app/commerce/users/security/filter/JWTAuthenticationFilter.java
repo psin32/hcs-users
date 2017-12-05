@@ -3,6 +3,7 @@ package co.uk.app.commerce.users.security.filter;
 import java.io.IOException;
 import java.security.Key;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -75,19 +76,21 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
 		Users users = (Users) auth.getPrincipal();
-		String token = Jwts.builder().setSubject(users.getUsername())
-				.setExpiration(tokenService.generateExpirationDate()).signWith(signatureAlgorithm, signingKey)
-				.compact();
-		res.addCookie(new Cookie("TOKEN", token));
 
 		Iterator<Address> adresseses = users.getAddress().iterator();
 		Address address = null;
 		while (adresseses.hasNext()) {
 			address = adresseses.next();
 		}
+		String token = null;
 		if (null != address) {
+			String audience = securityConfiguration.getJwtAudience();
+			token = Jwts.builder().setId(String.valueOf(users.getUserId())).setSubject(users.getUsername())
+					.setAudience(audience).setIssuedAt(new Date()).setExpiration(tokenService.generateExpirationDate())
+					.claim("userId", users.getUserId()).claim("registertype", users.getRegistertype())
+					.signWith(signatureAlgorithm, signingKey).compact();
+			res.addCookie(new Cookie("TOKEN", token));
 			res.addCookie(new Cookie("USERNAME", address.getFirstname()));
-			res.addCookie(new Cookie("USER_ID", users.getUserId().toString()));
 		}
 
 		res.addHeader(securityConfiguration.getJwtHeader(), securityConfiguration.getJwtTokenPrefix() + token);

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,10 +37,9 @@ public class RegistrationController {
 	public ResponseEntity<?> persistPerson(@RequestBody RegistrationBean registration, HttpServletResponse response) {
 		if (registrationService.isValidUser(registration)) {
 			RegistrationBean registeredUser = registrationService.persist(registration);
-			String token = tokenService.generateToken(registeredUser.getUsers().getUsername());
+			String token = tokenService.generateToken(registeredUser.getUsers());
 			response.addCookie(new Cookie("TOKEN", token));
 			response.addCookie(new Cookie("USERNAME", registeredUser.getAddress().getFirstname()));
-			response.addCookie(new Cookie("USER_ID", registeredUser.getUsers().getUserId().toString()));
 			response.addHeader(securityConfiguration.getJwtHeader(), securityConfiguration.getJwtTokenPrefix() + token);
 			return ResponseEntity.ok(registeredUser);
 		}
