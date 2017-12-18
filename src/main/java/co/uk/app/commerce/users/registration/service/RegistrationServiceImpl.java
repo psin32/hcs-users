@@ -8,8 +8,10 @@ import org.springframework.stereotype.Component;
 
 import co.uk.app.commerce.users.beans.RegistrationBean;
 import co.uk.app.commerce.users.entity.Address;
+import co.uk.app.commerce.users.entity.UserReg;
 import co.uk.app.commerce.users.entity.Users;
 import co.uk.app.commerce.users.repository.AddressRepository;
+import co.uk.app.commerce.users.repository.UserRegRepository;
 import co.uk.app.commerce.users.repository.UsersRepository;
 
 @Component
@@ -20,6 +22,9 @@ public class RegistrationServiceImpl implements RegistrationService {
 
 	@Autowired
 	private AddressRepository addressRepository;
+
+	@Autowired
+	private UserRegRepository userRegRepository;
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -41,12 +46,19 @@ public class RegistrationServiceImpl implements RegistrationService {
 	@Override
 	public RegistrationBean persist(RegistrationBean registration) {
 		Users users = usersRepository.save(registration.getUsers());
-		users.setPassword(bCryptPasswordEncoder.encode(users.getPassword()));
+		
+		registration.getUserreg().setUsers(users);
+		String password = registration.getUserreg().getPassword();
+		registration.getUserreg().setPassword(bCryptPasswordEncoder.encode(password));
+		UserReg userReg = userRegRepository.save(registration.getUserreg());
+
 		registration.getAddress().setUsers(users);
 		Address address = addressRepository.save(registration.getAddress());
+
 		RegistrationBean savedUser = new RegistrationBean();
 		savedUser.setAddress(address);
 		savedUser.setUsers(users);
+		savedUser.setUserreg(userReg);
 		return savedUser;
 	}
 }

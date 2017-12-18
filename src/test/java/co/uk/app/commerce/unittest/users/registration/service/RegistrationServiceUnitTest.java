@@ -20,7 +20,7 @@ public class RegistrationServiceUnitTest extends AbstractUnitTest {
 	public void testPersistUsers() throws Exception {
 		Users users = new Users();
 		users.setUsername("abcd@test.com");
-		users.setPassword("abcd1234");
+//		users.setPassword("abcd1234");
 		users.setRegistertype("R");
 		users.setProfiletype("C");
 

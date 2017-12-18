@@ -4,8 +4,6 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.security.core.userdetails.UserDetails;
-
 import co.uk.app.commerce.users.entity.Users;
 import io.jsonwebtoken.Claims;
 
@@ -26,8 +24,6 @@ public interface TokenService {
 	public Date generateExpirationDate();
 
 	public int getExpiredIn();
-
-	public Boolean validateToken(String token, UserDetails userDetails);
 
 	public Boolean isCreatedBeforeLastPasswordReset(Date created, Date lastPasswordReset);
 

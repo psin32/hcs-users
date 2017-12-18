@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import co.uk.app.commerce.users.config.SecurityConfiguration;
@@ -106,14 +105,6 @@ public class TokenServiceImpl implements TokenService {
 
 	public int getExpiredIn() {
 		return securityConfiguration.getJwtExpirationTime();
-	}
-
-	public Boolean validateToken(String token, UserDetails userDetails) {
-		Users users = (Users) userDetails;
-		final String username = getUsernameFromToken(token);
-		final Date created = getIssuedAtDateFromToken(token);
-		return (username != null && username.equals(userDetails.getUsername())
-				&& !isCreatedBeforeLastPasswordReset(created, users.getLastPasswordResetDate()));
 	}
 
 	public Boolean isCreatedBeforeLastPasswordReset(Date created, Date lastPasswordReset) {

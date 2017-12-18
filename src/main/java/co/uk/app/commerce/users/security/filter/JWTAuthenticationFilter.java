@@ -25,6 +25,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import co.uk.app.commerce.users.beans.LoginBean;
 import co.uk.app.commerce.users.config.SecurityConfiguration;
 import co.uk.app.commerce.users.entity.Address;
 import co.uk.app.commerce.users.entity.Users;
@@ -51,7 +52,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
 			throws AuthenticationException {
 		try {
-			Users creds = new ObjectMapper().readValue(req.getInputStream(), Users.class);
+			LoginBean creds = new ObjectMapper().readValue(req.getInputStream(), LoginBean.class);
 
 			return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(creds.getUsername(),
 					creds.getPassword(), new ArrayList<>()));
@@ -75,7 +76,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(securityConfiguration.getJwtSecret());
 		Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
-		Users users = (Users) auth.getPrincipal();
+		LoginBean loginBean = (LoginBean) auth.getPrincipal();
+
+		Users users = loginBean.getUsers();
 
 		Iterator<Address> adresseses = users.getAddress().iterator();
 		Address address = null;
