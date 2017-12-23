@@ -30,6 +30,12 @@ public class AddressController {
 		return addressService.getActiveAddressesByUserId(Long.valueOf(userId));
 	}
 
+	@GetMapping(path = "/shipping")
+	public @ResponseBody Iterable<Address> getShippingAddresses(HttpServletRequest request) {
+		String userId = String.valueOf(request.getAttribute("USER_ID"));
+		return addressService.getActiveAddressesByUserId(Long.valueOf(userId));
+	}
+
 	@PutMapping
 	public ResponseEntity<?> addAddress(@RequestBody AddressBean addressBean, HttpServletRequest request,
 			HttpServletResponse response) {

@@ -1,5 +1,6 @@
 package co.uk.app.commerce.users.repository;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,4 +16,6 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
 	Set<Address> findByUsersUsernameAndStatus(String username, String status);
 
 	Set<Address> findByUsersUserIdAndSelfaddressAndStatus(Long userId, Integer selfaddress, String status);
+	
+	List<Address> findByUsersUserIdAndStatusAndSelfaddress(Long usersId, String status, Integer selfaddress);
 }

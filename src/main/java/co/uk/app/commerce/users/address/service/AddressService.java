@@ -1,5 +1,6 @@
 package co.uk.app.commerce.users.address.service;
 
+import java.util.List;
 import java.util.Set;
 
 import co.uk.app.commerce.users.beans.AddressBean;
@@ -16,4 +17,6 @@ public interface AddressService {
 	Set<Address> getActiveAddressesByUsername(String username);
 
 	Address save(AddressBean addressBean);
+	
+	List<Address> getActiveShippingAddresses(Long usersId);
 }
