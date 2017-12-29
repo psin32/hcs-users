@@ -34,7 +34,6 @@ public class RegistrationServiceUnitTest extends AbstractUnitTest {
 		address.setFirstname("TestFirstname");
 		address.setLastname("TestLastname");
 		address.setEmail1("abcd@test.com");
-		address.setNickname("nickname");
 		address.setIsprimary(0);
 		address.setSelfaddress(1);
 
