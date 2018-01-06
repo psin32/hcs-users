@@ -64,4 +64,11 @@ public class AddressServiceImpl implements AddressService {
 				.stream().filter(address -> address.getAddresstype().contains(UsersConstant.ADDRESS_SHIPPING_TYPE))
 				.collect(Collectors.toList());
 	}
+
+	@Override
+	public void deleteAddress(Long userId, Long addressId) {
+		Address address = addressRepository.findByUsersUserIdAndAddressId(userId, addressId);
+		address.setStatus("T");
+		addressRepository.save(address);
+	}
 }

@@ -40,6 +40,7 @@ public class RegistrationController {
 			String token = tokenService.generateToken(registeredUser.getUsers());
 			response.addCookie(new Cookie("TOKEN", token));
 			response.addCookie(new Cookie("USERNAME", registeredUser.getAddress().getFirstname()));
+			response.addCookie(new Cookie("REGISTER_TYPE", "R"));
 			response.addHeader(securityConfiguration.getJwtHeader(), securityConfiguration.getJwtTokenPrefix() + token);
 			return ResponseEntity.ok(registeredUser);
 		}

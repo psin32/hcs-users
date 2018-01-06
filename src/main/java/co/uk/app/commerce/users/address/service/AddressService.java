@@ -19,4 +19,6 @@ public interface AddressService {
 	Address save(AddressBean addressBean);
 	
 	List<Address> getActiveShippingAddresses(Long usersId);
+	
+	void deleteAddress(Long userId, Long addressId);
 }

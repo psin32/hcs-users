@@ -18,4 +18,6 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
 	Set<Address> findByUsersUserIdAndSelfaddressAndStatus(Long userId, Integer selfaddress, String status);
 	
 	List<Address> findByUsersUserIdAndStatusAndSelfaddress(Long usersId, String status, Integer selfaddress);
+	
+	Address findByUsersUserIdAndAddressId(Long userId, Long addressId);
 }

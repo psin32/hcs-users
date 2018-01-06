@@ -94,6 +94,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 					.signWith(signatureAlgorithm, signingKey).compact();
 			res.addCookie(new Cookie("TOKEN", token));
 			res.addCookie(new Cookie("USERNAME", address.getFirstname()));
+			res.addCookie(new Cookie("REGISTER_TYPE", "R"));
 		}
 
 		res.addHeader(securityConfiguration.getJwtHeader(), securityConfiguration.getJwtTokenPrefix() + token);
