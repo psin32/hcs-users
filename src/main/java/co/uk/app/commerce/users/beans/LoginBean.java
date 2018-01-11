@@ -10,7 +10,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import co.uk.app.commerce.users.entity.Users;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class LoginBean implements Serializable, UserDetails {
 
 	private static final long serialVersionUID = 4804179612436659755L;
@@ -36,22 +44,6 @@ public class LoginBean implements Serializable, UserDetails {
 	@Transient
 	private boolean enabled = true;
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;
@@ -76,13 +68,4 @@ public class LoginBean implements Serializable, UserDetails {
 	public boolean isEnabled() {
 		return enabled;
 	}
-
-	public Users getUsers() {
-		return users;
-	}
-
-	public void setUsers(Users users) {
-		this.users = users;
-	}
-
 }

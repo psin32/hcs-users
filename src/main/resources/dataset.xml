@@ -6,7 +6,7 @@
 
 	<ADDRESS address_id="100" users_id="100" addresstype="S"
 		email1="a1@testing.com" isprimary="0" lastcreate="2017-11-26 22:41:23.0"
-		nickname="test" selfaddress="1" status="P" />
+		selfaddress="1" status="P" />
 
 	<USERREG id="500" users_id="100" password="abcd1234" />
 </dataset>

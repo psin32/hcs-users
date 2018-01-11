@@ -4,8 +4,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 @Component
 @PropertySource("classpath:application.properties")
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class SecurityConfiguration {
 
 	@Value("${jwt.secret}")
@@ -28,32 +35,4 @@ public class SecurityConfiguration {
 
 	@Value("${jwt.audience}")
 	private String jwtAudience;
-
-	public String getJwtSecret() {
-		return jwtSecret;
-	}
-
-	public int getJwtExpirationTime() {
-		return jwtExpirationTime;
-	}
-
-	public String getJwtTokenPrefix() {
-		return jwtTokenPrefix;
-	}
-
-	public String getJwtHeader() {
-		return jwtHeader;
-	}
-
-	public String getJwtSignupUrl() {
-		return jwtSignupUrl;
-	}
-
-	public String getJwtSigninUrl() {
-		return jwtSigninUrl;
-	}
-
-	public String getJwtAudience() {
-		return jwtAudience;
-	}
 }
