@@ -1,6 +1,8 @@
 package co.uk.app.commerce.users.security.service;
 
 import java.security.Key;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -99,8 +101,7 @@ public class TokenServiceImpl implements TokenService {
 
 	public Date generateExpirationDate() {
 		long expiresIn = getExpiredIn();
-		Date date = new Date();
-		return new Date(date.getTime() + expiresIn * 1000);
+		return Date.from(Instant.now().plus(expiresIn, ChronoUnit.MINUTES));
 	}
 
 	public int getExpiredIn() {

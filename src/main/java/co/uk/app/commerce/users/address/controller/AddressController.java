@@ -20,7 +20,7 @@ import co.uk.app.commerce.users.beans.AddressBean;
 import co.uk.app.commerce.users.entity.Address;
 
 @RestController
-@RequestMapping("/api/address")
+@RequestMapping("/address")
 public class AddressController {
 
 	@Autowired

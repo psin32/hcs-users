@@ -92,9 +92,17 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 					.setAudience(audience).setIssuedAt(new Date()).setExpiration(tokenService.generateExpirationDate())
 					.claim("userId", users.getUserId()).claim("registertype", users.getRegistertype())
 					.signWith(signatureAlgorithm, signingKey).compact();
-			res.addCookie(new Cookie("TOKEN", token));
-			res.addCookie(new Cookie("USERNAME", address.getFirstname()));
-			res.addCookie(new Cookie("REGISTER_TYPE", "R"));
+			Cookie cookie = new Cookie("TOKEN", token);
+			cookie.setPath("/");
+			res.addCookie(cookie);
+
+			cookie = new Cookie("USERNAME", address.getFirstname());
+			cookie.setPath("/");
+			res.addCookie(cookie);
+
+			cookie = new Cookie("REGISTER_TYPE", "R");
+			cookie.setPath("/");
+			res.addCookie(cookie);
 		}
 
 		res.addHeader(securityConfiguration.getJwtHeader(), securityConfiguration.getJwtTokenPrefix() + token);

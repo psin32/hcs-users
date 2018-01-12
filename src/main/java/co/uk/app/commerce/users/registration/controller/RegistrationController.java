@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.uk.app.commerce.users.beans.RegistrationBean;
 import co.uk.app.commerce.users.beans.UserTokenBean;
-import co.uk.app.commerce.users.config.SecurityConfiguration;
 import co.uk.app.commerce.users.registration.service.RegistrationService;
 import co.uk.app.commerce.users.security.service.TokenService;
 
@@ -30,18 +29,23 @@ public class RegistrationController {
 	@Autowired
 	private TokenService tokenService;
 
-	@Autowired
-	private SecurityConfiguration securityConfiguration;
-
 	@PostMapping(path = "/register")
 	public ResponseEntity<?> persistPerson(@RequestBody RegistrationBean registration, HttpServletResponse response) {
 		if (registrationService.isValidUser(registration)) {
 			RegistrationBean registeredUser = registrationService.persist(registration);
 			String token = tokenService.generateToken(registeredUser.getUsers());
-			response.addCookie(new Cookie("TOKEN", token));
-			response.addCookie(new Cookie("USERNAME", registeredUser.getAddress().getFirstname()));
-			response.addCookie(new Cookie("REGISTER_TYPE", "R"));
-			response.addHeader(securityConfiguration.getJwtHeader(), securityConfiguration.getJwtTokenPrefix() + token);
+
+			Cookie cookie = new Cookie("TOKEN", token);
+			cookie.setPath("/");
+			response.addCookie(cookie);
+
+			cookie = new Cookie("USERNAME", registeredUser.getAddress().getFirstname());
+			cookie.setPath("/");
+			response.addCookie(cookie);
+
+			cookie = new Cookie("REGISTER_TYPE", "R");
+			cookie.setPath("/");
+			response.addCookie(cookie);
 			return ResponseEntity.ok(registeredUser);
 		}
 		return ResponseEntity.status(HttpStatus.CONFLICT).build();
