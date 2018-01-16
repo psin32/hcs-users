@@ -1,5 +1,6 @@
 package co.uk.app.commerce.users.entity;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,7 +27,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Users {
+public class Users implements Serializable {
+
+	private static final long serialVersionUID = -690949431063081189L;
 
 	@OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
 	private Set<Address> address = new HashSet<>();
