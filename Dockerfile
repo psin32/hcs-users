@@ -34,4 +34,4 @@ EXPOSE 8080
 
 # CMD java $JAVA_OPTS -jar /usr/src/app/target/hcs-users-0.0.1-SNAPSHOT.jar > /usr/src/app/log/logger.log
 
-ENTRYPOINT ["java", "-Dlogging.file=SystemOut.log", "-jar", "/usr/src/app/target/hcs-users-0.0.1-SNAPSHOT.jar", "--server.port=8080"]
+ENTRYPOINT ["java", "-Dlogging.file=SystemOut.log", "-jar", "/usr/src/app/target/hcs-users-0.0.1-SNAPSHOT.jar", "--spring.config.location=classpath:/application-prod.properties", "--server.port=8080"]
