@@ -15,11 +15,8 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.Data;
-
 @Entity
 @Table(name = "userreg")
-@Data
 public class UserReg implements Serializable {
 
 	private static final long serialVersionUID = -7055340810021125326L;
@@ -45,4 +42,52 @@ public class UserReg implements Serializable {
 
 	@Column(name = "lastpasswordresetdate", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private Date lastPasswordResetDate;
+
+	public Users getUsers() {
+		return users;
+	}
+
+	public void setUsers(Users users) {
+		this.users = users;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Integer getPasswordexpired() {
+		return passwordexpired;
+	}
+
+	public void setPasswordexpired(Integer passwordexpired) {
+		this.passwordexpired = passwordexpired;
+	}
+
+	public Integer getPasswordretries() {
+		return passwordretries;
+	}
+
+	public void setPasswordretries(Integer passwordretries) {
+		this.passwordretries = passwordretries;
+	}
+
+	public Date getLastPasswordResetDate() {
+		return lastPasswordResetDate;
+	}
+
+	public void setLastPasswordResetDate(Date lastPasswordResetDate) {
+		this.lastPasswordResetDate = lastPasswordResetDate;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 }
