@@ -59,9 +59,6 @@ public class Address implements Serializable {
 
 	private String phone2;
 
-	@NotNull
-	private String nickname;
-
 	private String address1;
 
 	private String address2;
@@ -191,14 +188,6 @@ public class Address implements Serializable {
 
 	public void setPhone2(String phone2) {
 		this.phone2 = phone2;
-	}
-
-	public String getNickname() {
-		return nickname;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
 	}
 
 	public String getAddress1() {
