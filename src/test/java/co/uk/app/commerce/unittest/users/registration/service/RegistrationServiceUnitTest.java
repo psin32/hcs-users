@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import co.uk.app.commerce.unittest.users.base.AbstractUnitTest;
 import co.uk.app.commerce.users.beans.RegistrationBean;
+import co.uk.app.commerce.users.beans.Role;
 import co.uk.app.commerce.users.entity.Address;
 import co.uk.app.commerce.users.entity.UserReg;
 import co.uk.app.commerce.users.entity.Users;
@@ -23,6 +24,7 @@ public class RegistrationServiceUnitTest extends AbstractUnitTest {
 		users.setUsername("abcd@test.com");
 		users.setRegistertype("R");
 		users.setProfiletype("C");
+		users.setRole(Role.USER);
 
 		UserReg userReg = new UserReg();
 		userReg.setPassword("abcd1234");
