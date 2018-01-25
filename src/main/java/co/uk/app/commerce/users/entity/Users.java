@@ -17,6 +17,8 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import co.uk.app.commerce.users.beans.Role;
+
 @Entity
 public class Users implements Serializable {
 
@@ -53,6 +55,9 @@ public class Users implements Serializable {
 
 	@Column(name = "registrationupdate", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private Date registrationupdate;
+
+	@NotNull
+	private Role role;
 
 	@JsonIgnore
 	private String field1;
@@ -165,5 +170,13 @@ public class Users implements Serializable {
 
 	public void setUserreg(UserReg userreg) {
 		this.userreg = userreg;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 }

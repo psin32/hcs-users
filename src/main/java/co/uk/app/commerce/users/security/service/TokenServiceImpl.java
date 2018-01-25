@@ -84,7 +84,8 @@ public class TokenServiceImpl implements TokenService {
 		return Jwts.builder().setId(String.valueOf(users.getUserId())).setIssuer("commerce")
 				.setSubject(users.getUsername()).setAudience(audience).setIssuedAt(new Date())
 				.setExpiration(generateExpirationDate()).claim("userId", users.getUserId())
-				.claim("registertype", users.getRegistertype()).signWith(signatureAlgorithm, signingKey).compact();
+				.claim("registertype", users.getRegistertype()).claim("role", users.getRole())
+				.signWith(signatureAlgorithm, signingKey).compact();
 	}
 
 	public Claims getAllClaimsFromToken(String token) {

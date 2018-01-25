@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import co.uk.app.commerce.users.beans.RegistrationBean;
+import co.uk.app.commerce.users.beans.Role;
 import co.uk.app.commerce.users.entity.Address;
 import co.uk.app.commerce.users.entity.UserReg;
 import co.uk.app.commerce.users.entity.Users;
@@ -45,8 +46,11 @@ public class RegistrationServiceImpl implements RegistrationService {
 
 	@Override
 	public RegistrationBean persist(RegistrationBean registration) {
-		Users users = usersRepository.save(registration.getUsers());
-		
+		Users userBean = registration.getUsers();
+		userBean.setRole(Role.USER);
+
+		Users users = usersRepository.save(userBean);
+
 		registration.getUserreg().setUsers(users);
 		String password = registration.getUserreg().getPassword();
 		registration.getUserreg().setPassword(bCryptPasswordEncoder.encode(password));

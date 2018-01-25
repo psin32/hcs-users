@@ -91,7 +91,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			token = Jwts.builder().setId(String.valueOf(users.getUserId())).setSubject(users.getUsername())
 					.setAudience(audience).setIssuedAt(new Date()).setExpiration(tokenService.generateExpirationDate())
 					.claim("userId", users.getUserId()).claim("registertype", users.getRegistertype())
-					.signWith(signatureAlgorithm, signingKey).compact();
+					.claim("role", users.getRole()).signWith(signatureAlgorithm, signingKey).compact();
 			Cookie cookie = new Cookie("TOKEN", token);
 			cookie.setPath("/");
 			res.addCookie(cookie);
